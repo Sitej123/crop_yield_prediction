@@ -29,36 +29,49 @@
 
   /* NAV */
   nav {
-    background: var(--green-deep); padding: 0 2rem;
+    background: var(--green-deep); padding: 0 1.5rem;
     display: flex; align-items: center; justify-content: space-between;
     height: 64px; position: sticky; top: 0; z-index: 100;
     box-shadow: 0 2px 16px rgba(0,0,0,.25);
   }
   .logo { display: flex; align-items: center; gap: .75rem; }
   .logo-icon { font-size: 1.8rem; }
-  .logo-text { font-family: 'Playfair Display', serif; color: var(--green-light); font-size: 1.4rem; letter-spacing: .02em; }
+  .logo-text { font-family: 'Playfair Display', serif; color: var(--green-light); font-size: 1.2rem; letter-spacing: .02em; }
   .logo-text span { color: var(--gold); }
-  nav .tagline { color: var(--green-light); opacity: .6; font-size: .78rem; font-weight: 300; letter-spacing: .04em; }
-  .nav-tabs { display: flex; gap: .25rem; }
+  nav .tagline { color: var(--green-light); opacity: .6; font-size: .75rem; font-weight: 300; letter-spacing: .04em; }
+  .nav-tabs { display: flex; gap: .25rem; align-items: center; }
   .nav-tab {
-    color: var(--green-light); opacity: .7; padding: .5rem 1.1rem;
-    border-radius: 8px; cursor: pointer; font-size: .88rem; font-weight: 500;
+    color: var(--green-light); opacity: .7; padding: .5rem 0.9rem;
+    border-radius: 8px; cursor: pointer; font-size: .8rem; font-weight: 500;
     transition: all .2s; border: none; background: transparent;
   }
   .nav-tab:hover, .nav-tab.active { background: rgba(82,183,136,.18); opacity: 1; color: var(--gold-light); }
+  
+  /* MOBILE MENU */
+  .menu-toggle {
+    display: none; background: none; border: none; color: var(--green-light);
+    font-size: 1.5rem; cursor: pointer; padding: .5rem; z-index: 101;
+  }
+  .nav-tabs.mobile-open {
+    position: absolute; top: 64px; left: 0; right: 0; background: var(--green-deep);
+    flex-direction: column; gap: 0; align-items: stretch; padding: 0;
+  }
+  .nav-tabs.mobile-open .nav-tab {
+    border-radius: 0; padding: .75rem 1.5rem; border-bottom: 1px solid rgba(82,183,136,.1);
+  }
 
   /* LAYOUT */
-  main { max-width: 1300px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  main { max-width: 1300px; margin: 0 auto; padding: 2rem 1rem 4rem; }
   .page { display: none; }
   .page.active { display: block; animation: fadeIn .35s ease; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:none } }
   .page-header { margin-bottom: 2rem; }
-  .page-title { font-family:'Playfair Display',serif; font-size:2rem; color:var(--green-deep); }
+  .page-title { font-family:'Playfair Display',serif; font-size:clamp(1.5rem, 5vw, 2rem); color:var(--green-deep); }
   .page-sub { color:var(--text-muted); font-size:.9rem; margin-top:.3rem; }
 
   /* CARDS */
-  .card { background: var(--card-bg); border-radius: 16px; padding: 1.75rem; box-shadow: var(--shadow); border: 1px solid var(--border); }
-  .card-title { font-family:'Playfair Display',serif; font-size:1.15rem; color:var(--green-deep); margin-bottom:1.25rem; display:flex; align-items:center; gap:.5rem; }
+  .card { background: var(--card-bg); border-radius: 16px; padding: clamp(1rem, 2vw, 1.75rem); box-shadow: var(--shadow); border: 1px solid var(--border); }
+  .card-title { font-family:'Playfair Display',serif; font-size:clamp(1rem, 2vw, 1.15rem); color:var(--green-deep); margin-bottom:1.25rem; display:flex; align-items:center; gap:.5rem; }
 
   /* GRID */
   .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
@@ -70,13 +83,13 @@
   label { font-size:.8rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em; }
   input, select {
     padding: .65rem .9rem; border-radius:10px; border: 1.5px solid var(--border);
-    font-size:.93rem; font-family:'DM Sans',sans-serif; color:var(--text-dark);
-    background:#fff; transition: border-color .2s, box-shadow .2s;
+    font-size:clamp(.85rem, 2vw, .93rem); font-family:'DM Sans',sans-serif; color:var(--text-dark);
+    background:#fff; transition: border-color .2s, box-shadow .2s; width: 100%;
   }
   input:focus, select:focus { outline:none; border-color:var(--green-bright); box-shadow: 0 0 0 3px rgba(82,183,136,.18); }
 
   /* BUTTONS */
-  .btn { padding:.7rem 1.6rem; border-radius:10px; font-weight:600; font-size:.9rem; cursor:pointer; border:none; transition:all .2s; font-family:'DM Sans',sans-serif; }
+  .btn { padding:clamp(.6rem, 1.5vw, .7rem) clamp(1.2rem, 2vw, 1.6rem); border-radius:10px; font-weight:600; font-size:clamp(.8rem, 1.5vw, .9rem); cursor:pointer; border:none; transition:all .2s; font-family:'DM Sans',sans-serif; }
   .btn-primary { background: linear-gradient(135deg, var(--green-mid), var(--green-bright)); color:#fff; box-shadow: 0 4px 14px rgba(45,106,79,.35); }
   .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(45,106,79,.45); }
   .btn-primary:disabled { opacity:.6; cursor:not-allowed; transform:none; }
@@ -157,11 +170,93 @@
   .profit-negative { color:var(--red); }
   .section-sep { height:1px; background:var(--border); margin:1.5rem 0; }
 
+  /* FOOTER RESPONSIVE */
+  footer { background: var(--green-deep); margin-top: clamp(2rem, 4vw, 3rem); padding: clamp(1.25rem, 3vw, 2rem); text-align: center; border-top: 3px solid var(--green-mid); }
+  footer > div { max-width: 1300px; margin: 0 auto; }
+  footer div[style*="font-size:.85rem"] { font-size: clamp(.75rem, 2vw, .85rem); }
+  footer div[style*="font-size:.8rem"] { font-size: clamp(.7rem, 1.8vw, .8rem); }
+  footer div[style*="font-size:.78rem"] { font-size: clamp(.65rem, 1.5vw, .78rem); }
+
+  @media (max-width: 600px) {
+    footer { margin-top: 2rem; padding: 1.25rem 1rem; }
+    footer div[style*="display:flex"] { gap: 1rem; }
+  }
+
+  @media (max-width: 400px) {
+    footer { padding: 1rem 0.75rem; margin-top: 1.5rem; }
+  }
+
   @media (max-width:768px) {
     .grid-2,.grid-3 { grid-template-columns:1fr; }
     .form-row { grid-template-columns:1fr; }
     nav .tagline { display:none; }
-    .world-city-grid { grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); }
+    .world-city-grid { grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
+    .menu-toggle { display: block; }
+    .nav-tabs { flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: var(--green-deep); max-height: 0; overflow: hidden; transition: max-height .3s ease; gap: 0; }
+    .nav-tabs.mobile-open { max-height: 400px; }
+    .nav-tabs.mobile-open .nav-tab { border-bottom: 1px solid rgba(82,183,136,.1); }
+    .logo-text { font-size: 1rem; }
+    .page-title { font-size: 1.5rem; }
+    main { padding: 1.5rem 1rem 3rem; }
+  }
+  
+  @media (max-width: 600px) {
+    body { font-size: .9rem; }
+    nav { padding: 0 1rem; }
+    .logo { gap: .5rem; }
+    .logo-icon { font-size: 1.5rem; }
+    .logo-text { font-size: .95rem; }
+    .page-title { font-size: 1.3rem; }
+    main { padding: 1rem 0.75rem 2rem; }
+    .card { padding: 1rem; border-radius: 12px; }
+    .btn { padding: .55rem 1rem; font-size: .8rem; }
+    input, select { font-size: .85rem; padding: .5rem .75rem; }
+    .stat-box { padding: .75rem .85rem; }
+    .stat-value { font-size: 1.5rem; }
+    .grid-2, .grid-3 { gap: 1rem; }
+    .world-city-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: .75rem; }
+    .city-card { padding: .75rem; }
+    .city-name { font-size: .85rem; }
+    .city-temp { font-size: 1.5rem; }
+    .impact-row { gap: .5rem; }
+    .impact-name { width: 65px; font-size: .7rem; }
+    .impact-pct { width: 35px; font-size: .7rem; }
+    .pest-tip { padding: .5rem; gap: .5rem; font-size: .8rem; }
+    .fert-card { padding: .6rem .8rem; margin-bottom: .4rem; }
+  }
+  
+  @media (max-width: 400px) {
+    body { font-size: .85rem; }
+    nav { height: 56px; }
+    .page-title { font-size: 1.1rem; }
+    .card { padding: .75rem; border-radius: 10px; }
+    .card-title { font-size: .95rem; margin-bottom: .75rem; }
+    .grid-2, .grid-3 { gap: .75rem; }
+    .form-row { gap: .75rem; margin-bottom: .75rem; }
+    input, select { font-size: .8rem; padding: .45rem .65rem; }
+    .btn { padding: .5rem .85rem; font-size: .75rem; }
+    .stat-box { padding: .6rem .7rem; }
+    .stat-value { font-size: 1.3rem; }
+    .stat-label { font-size: .65rem; }
+    label { font-size: .75rem; }
+    .world-city-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+    .city-card { padding: .6rem; }
+    .forecast-card { padding: .6rem; font-size: .7rem; }
+    .badge { font-size: .65rem; padding: .2rem .55rem; }
+    .result-panel { padding: 1rem; }
+  }
+
+  /* HERO RESPONSIVE */
+  @media (max-width: 768px) {
+    [style*="display:grid"][style*="grid-template-columns: 1.1fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="font-size:2.6rem"] { font-size: clamp(1.5rem, 5vw, 2.2rem) !important; }
+    [style*="padding:3.5rem 2.5rem"] { padding: clamp(1.5rem, 4vw, 2.5rem) !important; }
+  }
+  
+  @media (max-width: 600px) {
+    [style*="position:absolute"][style*="right:-40px"] { display: none !important; }
+    [style*="position:absolute"][style*="right:80px"] { display: none !important; }
+    [style*="position:absolute"][style*="right:2.5rem"] { display: flex !important; flex-direction: column !important; position: relative !important; right: auto !important; bottom: auto !important; margin-top: 1.5rem !important; }
   }
 </style>
 </head>
@@ -175,13 +270,14 @@
       <div class="tagline">Crop Intelligence Platform</div>
     </div>
   </div>
-  <div class="nav-tabs">
+  <div class="nav-tabs" id="nav-menu">
     <button class="nav-tab active" onclick="goTo('home')">🏠 Home</button>
     <button class="nav-tab" onclick="goTo('yield')">📈 Yield Predict</button>
     <button class="nav-tab" onclick="goTo('pest')">🪲 Pest Monitor</button>
     <button class="nav-tab" onclick="goTo('weather')">🌤️ Weather</button>
     <button class="nav-tab" onclick="goTo('contact')">📬 Contact Us</button>
-</div>
+  </div>
+  <button class="menu-toggle" id="menu-toggle" onclick="toggleMenu()">☰</button>
 </nav>
 
 <main>
@@ -706,8 +802,20 @@
 <script>
 const API = '';
 
+// ── Mobile Menu Toggle ────────────────────────────────────────────────────────
+function toggleMenu() {
+  const menu = document.getElementById('nav-menu');
+  menu.classList.toggle('mobile-open');
+}
+
+function closeMenu() {
+  const menu = document.getElementById('nav-menu');
+  menu.classList.remove('mobile-open');
+}
+
 // ── Navigation ───────────────────────────────────────────────────────────────
 function goTo(page) {
+  closeMenu();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
