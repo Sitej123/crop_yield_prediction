@@ -142,17 +142,25 @@ class CropYieldModel:
     # LOAD SAVED MODELS
     # ------------------------------------------------------------------
 
+    import os
     def load(self) -> bool:
-        """Load pre-trained models from disk."""
         try:
-            self.yield_model      = joblib.load(Config.MODEL_PATH)
-            self.scaler           = joblib.load(Config.SCALER_PATH)
-            self.label_encoder    = joblib.load(Config.ENCODER_PATH)
-            self.pest_model       = joblib.load(Config.PEST_MODEL_PATH)
-            self.crop_classes_    = self.label_encoder.classes_
-            self.is_trained       = True
+            print("MODEL:", Config.MODEL_PATH)
+            print("EXISTS:", os.path.exists(Config.MODEL_PATH))
+
+            self.yield_model = joblib.load(Config.MODEL_PATH)
+            self.scaler = joblib.load(Config.SCALER_PATH)
+            self.label_encoder = joblib.load(Config.ENCODER_PATH)
+            self.pest_model = joblib.load(Config.PEST_MODEL_PATH)
+
+            self.crop_classes = self.label_encoder.classes_
+            self.is_trained = True
+
+            print("Models loaded successfully!")
             return True
-        except FileNotFoundError:
+
+        except Exception as e:
+            print("Load Error:", e)
             return False
 
     # ------------------------------------------------------------------
