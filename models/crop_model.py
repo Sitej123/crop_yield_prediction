@@ -142,25 +142,37 @@ class CropYieldModel:
     # LOAD SAVED MODELS
     # ------------------------------------------------------------------
 
-    import os
+import os
+import joblib
+    
     def load(self) -> bool:
         try:
-            print("MODEL:", Config.MODEL_PATH)
-            print("EXISTS:", os.path.exists(Config.MODEL_PATH))
-
+            print("========== MODEL DEBUG ==========")
+            print("Yield Model:", Config.MODEL_PATH)
+            print("Exists:", os.path.exists(Config.MODEL_PATH))
+    
+            print("Scaler:", Config.SCALER_PATH)
+            print("Exists:", os.path.exists(Config.SCALER_PATH))
+    
+            print("Encoder:", Config.ENCODER_PATH)
+            print("Exists:", os.path.exists(Config.ENCODER_PATH))
+    
+            print("Pest Model:", Config.PEST_MODEL_PATH)
+            print("Exists:", os.path.exists(Config.PEST_MODEL_PATH))
+    
             self.yield_model = joblib.load(Config.MODEL_PATH)
             self.scaler = joblib.load(Config.SCALER_PATH)
             self.label_encoder = joblib.load(Config.ENCODER_PATH)
             self.pest_model = joblib.load(Config.PEST_MODEL_PATH)
-
+    
             self.crop_classes = self.label_encoder.classes_
             self.is_trained = True
-
-            print("Models loaded successfully!")
+    
+            print("✅ Models loaded successfully")
             return True
-
+    
         except Exception as e:
-            print("Load Error:", e)
+            print("❌ LOAD ERROR:", repr(e))
             return False
 
     # ------------------------------------------------------------------
