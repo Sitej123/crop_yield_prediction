@@ -28,7 +28,7 @@ class CropYieldModel:
         self.scaler            = StandardScaler()
         self.label_encoder     = LabelEncoder()
         self.crop_classes_     = None   # stores class labels for recommender
-        self.is_trained        = True
+        self.is_trained        = False
         os.makedirs("models/saved", exist_ok=True)
 
     # ------------------------------------------------------------------
@@ -271,7 +271,7 @@ import joblib
     # ------------------------------------------------------------------
     # HELPERS
     # ------------------------------------------------------------------
-
+    self.is_trained=True
     def _require_trained(self):
         if not self.is_trained:
             raise RuntimeError("Model not trained. Call train() or load() first.")
