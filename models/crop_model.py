@@ -141,9 +141,6 @@ class CropYieldModel:
     # ------------------------------------------------------------------
     # LOAD SAVED MODELS
     # ------------------------------------------------------------------
-
-import os
-import joblib
     
     def load(self) -> bool:
         try:
@@ -271,7 +268,6 @@ import joblib
     # ------------------------------------------------------------------
     # HELPERS
     # ------------------------------------------------------------------
-    self.is_trained=True
     def _require_trained(self):
         if not self.is_trained:
             raise RuntimeError("Model not trained. Call train() or load() first.")
