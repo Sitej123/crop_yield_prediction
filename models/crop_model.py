@@ -28,7 +28,7 @@ class CropYieldModel:
         self.scaler            = StandardScaler()
         self.label_encoder     = LabelEncoder()
         self.crop_classes_     = None   # stores class labels for recommender
-        self.is_trained        = False
+        self.is_trained        = True
         os.makedirs("models/saved", exist_ok=True)
 
     # ------------------------------------------------------------------
