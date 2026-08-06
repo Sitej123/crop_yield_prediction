@@ -19,6 +19,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.metrics import mean_absolute_error, r2_score, accuracy_score
 from config import Config
+from pathlib import Path
+import traceback
+import joblib
 
 class CropYieldModel:
     def __init__(self):
@@ -143,35 +146,58 @@ class CropYieldModel:
     # ------------------------------------------------------------------
 
     
-    def load(self) -> bool:
-        try:
-            print("========== MODEL DEBUG ==========")
-            print("Yield Model:", Config.MODEL_PATH)
-            print("Exists:", os.path.exists(Config.MODEL_PATH))
-    
-            print("Scaler:", Config.SCALER_PATH)
-            print("Exists:", os.path.exists(Config.SCALER_PATH))
-    
-            print("Encoder:", Config.ENCODER_PATH)
-            print("Exists:", os.path.exists(Config.ENCODER_PATH))
-    
-            print("Pest Model:", Config.PEST_MODEL_PATH)
-            print("Exists:", os.path.exists(Config.PEST_MODEL_PATH))
-    
-            self.yield_model = joblib.load(Config.MODEL_PATH)
-            self.scaler = joblib.load(Config.SCALER_PATH)
-            self.label_encoder = joblib.load(Config.ENCODER_PATH)
-            self.pest_model = joblib.load(Config.PEST_MODEL_PATH)
-    
-            self.crop_classes = self.label_encoder.classes_
-            self.is_trained = True
-    
-            print("✅ Models loaded successfully")
-            return True
-    
-        except Exception as e:
-            print("❌ LOAD ERROR:", repr(e))
-            return False why the model is not loading
+def load(self) -> bool:
+    """
+    Load all saved models from disk.
+    Returns True if successful, otherwise False.
+    """
+
+    try:
+        # Project root
+        base_dir = Path(__file__).resolve().parent.parent
+
+        model_path = base_dir / "models" / "saved" / "yield_model.pkl"
+        scaler_path = base_dir / "models" / "saved" / "scaler.pkl"
+        encoder_path = base_dir / "models" / "saved" / "label_encoder.pkl"
+        pest_path = base_dir / "models" / "saved" / "pest_model.pkl"
+
+        print("=" * 60)
+        print("Loading Models...")
+        print("=" * 60)
+
+        for path in [model_path, scaler_path, encoder_path, pest_path]:
+            print(f"{path.name} -> {path.exists()}")
+
+            if not path.exists():
+                raise FileNotFoundError(f"Missing model file: {path}")
+
+        self.yield_model = joblib.load(model_path)
+        print("✅ Yield model loaded")
+
+        self.scaler = joblib.load(scaler_path)
+        print("✅ Scaler loaded")
+
+        self.label_encoder = joblib.load(encoder_path)
+        print("✅ Label encoder loaded")
+
+        self.pest_model = joblib.load(pest_path)
+        print("✅ Pest model loaded")
+
+        self.crop_classes_ = self.label_encoder.classes_
+
+        self.is_trained = True
+
+        print("✅ All models loaded successfully")
+        return True
+
+    except Exception as e:
+        print("=" * 60)
+        print("❌ MODEL LOADING FAILED")
+        traceback.print_exc()
+        print("=" * 60)
+
+        self.is_trained = False
+        return False
 
     # ------------------------------------------------------------------
     # INFERENCE
