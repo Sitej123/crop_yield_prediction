@@ -141,49 +141,37 @@ class CropYieldModel:
     # ------------------------------------------------------------------
     # LOAD SAVED MODELS
     # ------------------------------------------------------------------
+
     
-import traceback
-
-def load(self) -> bool:
-    try:
-        print("========== MODEL DEBUG ==========")
-
-        print("Yield Model:", Config.MODEL_PATH)
-        print("Exists:", os.path.exists(Config.MODEL_PATH))
-
-        print("Scaler:", Config.SCALER_PATH)
-        print("Exists:", os.path.exists(Config.SCALER_PATH))
-
-        print("Encoder:", Config.ENCODER_PATH)
-        print("Exists:", os.path.exists(Config.ENCODER_PATH))
-
-        print("Pest Model:", Config.PEST_MODEL_PATH)
-        print("Exists:", os.path.exists(Config.PEST_MODEL_PATH))
-
-        self.yield_model = joblib.load(Config.MODEL_PATH)
-        print("✅ Yield model loaded")
-
-        self.scaler = joblib.load(Config.SCALER_PATH)
-        print("✅ Scaler loaded")
-
-        self.label_encoder = joblib.load(Config.ENCODER_PATH)
-        print("✅ Label encoder loaded")
-
-        self.pest_model = joblib.load(Config.PEST_MODEL_PATH)
-        print("✅ Pest model loaded")
-
-        self.crop_classes_ = self.label_encoder.classes_
-
-        self.is_trained = True
-
-        print("✅ All models loaded successfully")
-        return True
-
-    except Exception:
-        print("❌ Model loading failed")
-        traceback.print_exc()
-        self.is_trained = False
-        return False
+    def load(self) -> bool:
+        try:
+            print("========== MODEL DEBUG ==========")
+            print("Yield Model:", Config.MODEL_PATH)
+            print("Exists:", os.path.exists(Config.MODEL_PATH))
+    
+            print("Scaler:", Config.SCALER_PATH)
+            print("Exists:", os.path.exists(Config.SCALER_PATH))
+    
+            print("Encoder:", Config.ENCODER_PATH)
+            print("Exists:", os.path.exists(Config.ENCODER_PATH))
+    
+            print("Pest Model:", Config.PEST_MODEL_PATH)
+            print("Exists:", os.path.exists(Config.PEST_MODEL_PATH))
+    
+            self.yield_model = joblib.load(Config.MODEL_PATH)
+            self.scaler = joblib.load(Config.SCALER_PATH)
+            self.label_encoder = joblib.load(Config.ENCODER_PATH)
+            self.pest_model = joblib.load(Config.PEST_MODEL_PATH)
+    
+            self.crop_classes = self.label_encoder.classes_
+            self.is_trained = True
+    
+            print("✅ Models loaded successfully")
+            return True
+    
+        except Exception as e:
+            print("❌ LOAD ERROR:", repr(e))
+            return False why the model is not loading
 
     # ------------------------------------------------------------------
     # INFERENCE
