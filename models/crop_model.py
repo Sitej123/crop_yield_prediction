@@ -145,59 +145,58 @@ class CropYieldModel:
     # LOAD SAVED MODELS
     # ------------------------------------------------------------------
 
-    
-def load(self) -> bool:
-    """
-    Load all saved models from disk.
-    Returns True if successful, otherwise False.
-    """
+    def load(self) -> bool:
+        """
+        Load all saved models from disk.
+        Returns True if successful, otherwise False.
+        """
 
-    try:
-        # Project root
-        base_dir = Path(__file__).resolve().parent.parent
+        try:
+            # Project root
+            base_dir = Path(__file__).resolve().parent.parent
 
-        model_path = base_dir / "models" / "saved" / "yield_model.pkl"
-        scaler_path = base_dir / "models" / "saved" / "scaler.pkl"
-        encoder_path = base_dir / "models" / "saved" / "label_encoder.pkl"
-        pest_path = base_dir / "models" / "saved" / "pest_model.pkl"
+            model_path = base_dir / "models" / "saved" / "yield_model.pkl"
+            scaler_path = base_dir / "models" / "saved" / "scaler.pkl"
+            encoder_path = base_dir / "models" / "saved" / "label_encoder.pkl"
+            pest_path = base_dir / "models" / "saved" / "pest_model.pkl"
 
-        print("=" * 60)
-        print("Loading Models...")
-        print("=" * 60)
+            print("=" * 60)
+            print("Loading Models...")
+            print("=" * 60)
 
-        for path in [model_path, scaler_path, encoder_path, pest_path]:
-            print(f"{path.name} -> {path.exists()}")
+            for path in [model_path, scaler_path, encoder_path, pest_path]:
+                print(f"{path.name} -> {path.exists()}")
 
-            if not path.exists():
-                raise FileNotFoundError(f"Missing model file: {path}")
+                if not path.exists():
+                    raise FileNotFoundError(f"Missing model file: {path}")
 
-        self.yield_model = joblib.load(model_path)
-        print("✅ Yield model loaded")
+            self.yield_model = joblib.load(model_path)
+            print("✅ Yield model loaded")
 
-        self.scaler = joblib.load(scaler_path)
-        print("✅ Scaler loaded")
+            self.scaler = joblib.load(scaler_path)
+            print("✅ Scaler loaded")
 
-        self.label_encoder = joblib.load(encoder_path)
-        print("✅ Label encoder loaded")
+            self.label_encoder = joblib.load(encoder_path)
+            print("✅ Label encoder loaded")
 
-        self.pest_model = joblib.load(pest_path)
-        print("✅ Pest model loaded")
+            self.pest_model = joblib.load(pest_path)
+            print("✅ Pest model loaded")
 
-        self.crop_classes_ = self.label_encoder.classes_
+            self.crop_classes_ = self.label_encoder.classes_
 
-        self.is_trained = True
+            self.is_trained = True
 
-        print("✅ All models loaded successfully")
-        return True
+            print("✅ All models loaded successfully")
+            return True
 
-    except Exception as e:
-        print("=" * 60)
-        print("❌ MODEL LOADING FAILED")
-        traceback.print_exc()
-        print("=" * 60)
+        except Exception as e:
+            print("=" * 60)
+            print("❌ MODEL LOADING FAILED")
+            traceback.print_exc()
+            print("=" * 60)
 
-        self.is_trained = False
-        return False
+            self.is_trained = False
+            return False
 
     # ------------------------------------------------------------------
     # INFERENCE
