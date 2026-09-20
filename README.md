@@ -19,6 +19,9 @@ A Machine Learning–based web application that helps users predict crop yield, 
 👨‍💻 Developed By
 
 Anubhab Panda
+Sitej Meher
+
+url: https://crop-yield-prediction-nu.vercel.app/
 
 📜 License
 
